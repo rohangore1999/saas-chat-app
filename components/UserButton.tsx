@@ -10,9 +10,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import UserAvatar from "./UserAvatar";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 const UserButton = ({ session }: { session: any }) => {
+  // subscription listener
+
   // session : Logged In or not
   if (!session)
     return (
@@ -25,16 +27,15 @@ const UserButton = ({ session }: { session: any }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <UserAvatar name="Rohan Gore" image={"https://github.com/shadcn.png"} />
+        <UserAvatar name={session?.user?.name} image={session?.user?.image} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => signOut()}>Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
