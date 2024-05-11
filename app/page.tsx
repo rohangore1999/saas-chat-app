@@ -1,9 +1,14 @@
 import Image from "@/node_modules/next/image";
 import Link from "@/node_modules/next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 
 import heroImg from "@landing/heroImg.jpg";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  console.log({ session });
+
   return (
     <main>
       <div className="relative isolate pt-14 dark:bg-gray-900">
